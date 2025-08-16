@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Application Form</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.4; color: #333; background-color: #f5f5f5; padding: 15px; font-size: 13px; }
+        .form-container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2c5282; padding-bottom: 10px; }
+        .form-title { font-size: 18px; color: #2c5282; font-weight: bold; text-transform: uppercase; }
+        .section { margin-bottom: 15px; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; }
+        .section-title { font-size: 14px; font-weight: bold; color: #2c5282; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+        label { display: block; margin-bottom: 3px; font-weight: 600; color: #4a5568; font-size: 12px; }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select, textarea {
+            width: 100%; padding: 6px; border: 1px solid #cbd5e0; border-radius: 3px; font-size: 12px; transition: border-color 0.3s;
+        }
+        input::placeholder, textarea::placeholder { color: #a0aec0; opacity: 0.7; }
+        input[type="text"].date-field::placeholder { color: #cbd5e0; opacity: 0.5; }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="date"]:focus,
+        input[type="number"]:focus, select:focus, textarea:focus { outline: none; border-color: #4299e1; box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.1); }
+        textarea { resize: vertical; min-height: 60px; }
+        .address-field { min-height: 80px; }
+        .table-section { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; border: 2px solid #2d3748; font-size: 11px; }
+        th, td { border: 1px solid #2d3748; padding: 6px; text-align: left; }
+        th { background-color: #2d3748; font-weight: 600; color: white; }
+        .btn-calculate { background-color: #38a169; color: white; font-size: 9px; padding: 3px 6px; margin-left: 2px; white-space: nowrap; cursor: pointer; border: none; border-radius: 4px; transition: background-color 0.3s; }
+        .btn-calculate:hover { background-color: #2f855a; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+        .form-group { flex: 1; min-width: 150px; }
+        .form-group.full-width { flex: 100%; }
+        .form-group.half-width { flex: 48%; }
+        .form-group.third-width { flex: 32%; }
+        .form-group.quarter-width { flex: 23%; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
+        .radio-group.vertical { flex-direction: column; gap: 5px; }
+        .radio-group.compact { gap: 8px; }
+        .radio-item, .checkbox-item { display: flex; align-items: center; gap: 3px; font-size: 11px; }
+        input[type="radio"], input[type="checkbox"] { width: auto; margin: 0; }
+        .buttons { text-align: center; margin-top: 20px; padding-top: 15px; border-top: 2px solid #e2e8f0; }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s; margin: 0 5px; }
+        .btn-primary { background-color: #2c5282; color: white; }
+        .btn-primary:hover { background-color: #2a4a7a; }
+        .btn-secondary { background-color: #e2e8f0; color: #4a5568; }
+        .btn-secondary:hover { background-color: #cbd5e0; }
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm;
+            }
+            .btn-calculate, .buttons { display: none; }
+        }
+        @media (max-width: 768px) {
+            .form-group.half-width, .form-group.third-width, .form-group.quarter-width { flex: 100%; }
+            .radio-group, .checkbox-group { flex-direction: column; gap: 8px; }
+            .two-column { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="header">
+            <div class="form-title">Application Form</div>
+        </div>
+        <form id="applicationForm">
+            <!-- == Basic Information == -->
+            <div class="section">
+                <div class="section-title">Basic Information</div>
+                <div class="form-row">
+                    <div class="form-group quarter-width">
+                        <label for="applicationNo">Application #:</label>
+                        <input type="text" id="applicationNo" name="applicationNo">
+                    </div>
+                    <div class="form-group quarter-width">
+                        <label for="date">Date:</label>
+                        <input type="text" id="date" name="date" class="date-field" placeholder="DD/MM/YYYY" required>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="applicantName">Name of the Applicant:</label>
+                        <input type="text" id="applicantName" name="applicantName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group quarter-width">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="18" max="100" required>
+                    </div>
+                    <div class="form-group quarter-width">
+                        <label for="mobile">Mobile #:</label>
+                        <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="form-group quarter-width">
+                        <label for="aadhar">Aadhar No:</label>
+                        <input type="text" id="aadhar" name="aadhar" pattern="[0-9]{12}" maxlength="12">
+                    </div>
+                    <div class="form-group quarter-width">
+                        <label for="pan">PAN No:</label>
+                        <input type="text" id="pan" name="pan" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" class="address-field" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- == Existing Investments / Risk Profile / Insurance == -->
+            <div class="two-column">
+                <div class="section">
+                    <div class="section-title">Existing Investments</div>
+                    <div class="table-section">
+                        <table class="investment-table">
+                            <thead>
+                                <tr><th>Type</th><th>Amount (Rs)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Bank FD</td><td><input type="number" name="bankFD" placeholder="INR"></td></tr>
+                                <tr><td>Bonds</td><td><input type="number" name="bonds" placeholder="INR"></td></tr>
+                                <tr><td>Gold</td><td><input type="number" name="gold" placeholder="INR"></td></tr>
+                                <tr><td>Real Estate</td><td><input type="number" name="realEstate" placeholder="INR"></td></tr>
+                                <tr><td>Mutual Funds</td><td><input type="number" name="mutualFunds" placeholder="INR"></td></tr>
+                                <tr><td>Stocks</td><td><input type="number" name="stocks" placeholder="INR"></td></tr>
+                                <tr><td>Others</td><td><input type="number" name="others" placeholder="INR"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="section">
+                        <div class="section-title">Risk Profile</div>
+                        <label style="font-size: 11px; margin-bottom: 5px;">Risk Profile (Down Side):</label>
+                        <div class="radio-group compact">
+                            <div class="radio-item"><input type="radio" id="risk1" name="riskProfile" value="0 to -10"><label for="risk1">0 to -10%</label></div>
+                            <div class="radio-item"><input type="radio" id="risk2" name="riskProfile" value="-10 to -20"><label for="risk2">-10% to -20%</label></div>
+                            <div class="radio-item"><input type="radio" id="risk3" name="riskProfile" value="-20 to -30"><label for="risk3">-20% to -30%</label></div>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Insurance</div>
+                        <div style="margin-top: 8px;">
+                            <label style="font-size: 11px;">Term Insurance:</label>
+                            <div class="radio-group compact">
+                                <div class="radio-item"><input type="radio" id="termYes" name="termInsurance" value="yes"><label for="termYes">Yes</label></div>
+                                <div class="radio-item"><input type="radio" id="termNo" name="termInsurance" value="no"><label for="termNo">No</label></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 6px;">
+                            <label style="font-size: 11px;">Mediclaim Policy:</label>
+                            <div class="radio-group compact">
+                                <div class="radio-item"><input type="radio" id="mediclaimYes" name="mediclaim" value="yes"><label for="mediclaimYes">Yes</label></div>
+                                <div class="radio-item"><input type="radio" id="mediclaimNo" name="mediclaim" value="no"><label for="mediclaimNo">No</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- == Investment Horizon == -->
+            <div class="section">
+                <div class="section-title">Investment Horizon</div>
+                <div class="table-section">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time Period</th>
+                                <th>Present Amount (Rs)</th>
+                                <th>Future Amount (Rs)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1.5 to 2 years</td>
+                                <td><input type="number" id="present_1_2" placeholder="INR"></td>
+                                <td><input type="number" id="future_1_2" placeholder="INR" readonly></td>
+                                <td><button type="button" class="btn-calculate" onclick="calculateCI('present_1_2', 'future_1_2', 2)">FV @ 6.5% (2Y)</button></td>
+                            </tr>
+                            <tr>
+                                <td>5 to 6 years</td>
+                                <td><input type="number" id="present_5_6" placeholder="INR"></td>
+                                <td><input type="number" id="future_5_6" placeholder="INR" readonly></td>
+                                <td><button type="button" class="btn-calculate" onclick="calculateCI('present_5_6', 'future_5_6', 6)">FV @ 6.5% (6Y)</button></td>
+                            </tr>
+                            <tr>
+                                <td>10 years</td>
+                                <td><input type="number" id="present_10" placeholder="INR"></td>
+                                <td><input type="number" id="future_10" placeholder="INR" readonly></td>
+                                <td><button type="button" class="btn-calculate" onclick="calculateCI('present_10', 'future_10', 10)">FV @ 6.5% (10Y)</button></td>
+                            </tr>
+                            <tr>
+                                <td>15 years</td>
+                                <td><input type="number" id="present_15" placeholder="INR"></td>
+                                <td><input type="number" id="future_15" placeholder="INR" readonly></td>
+                                <td><button type="button" class="btn-calculate" onclick="calculateCI('present_15', 'future_15', 15)">FV @ 6.5% (15Y)</button></td>
+                            </tr>
+                            <tr>
+                                <td>20 years</td>
+                                <td><input type="number" id="present_20" placeholder="INR"></td>
+                                <td><input type="number" id="future_20" placeholder="INR" readonly></td>
+                                <td><button type="button" class="btn-calculate" onclick="calculateCI('present_20', 'future_20', 20)">FV @ 6.5% (20Y)</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- == Retirement Goal Amount == -->
+            <div class="section">
+                <div class="section-title">Retirement Goal Amount</div>
+                <div class="form-row" style="align-items:flex-end; gap:10px;">
+                    <div class="form-group third-width">
+                        <label for="yearsLeft">Years Left for Retirement:</label>
+                        <input type="number" id="yearsLeft" name="yearsLeft" placeholder="Years">
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="presentAmount">Current Required Amount (Rs):</label>
+                        <input type="number" id="presentAmount" name="presentAmount" placeholder="INR">
+                    </div>
+                    <div class="form-group third-width">
+                        <label for="retirementAmount">Future Retirement amount (Rs):</label>
+                        <input type="number" id="retirementAmount" name="retirementAmount" placeholder="INR" readonly>
+                        <button type="button" class="btn-calculate" style="margin-top:6px" onclick="calculateRetirementFV()">Calculate Future Retirement Value</button>
+                    </div>
+                </div>
+            </div>
+            <!-- == Investment Preferences == -->
+            <div class="section">
+                <div class="section-title">Investment Preferences</div>
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label>Start Investment:</label>
+                        <div class="radio-group compact">
+                            <div class="radio-item"><input type="radio" id="month1" name="startTiming" value="1month"><label for="month1">1 month</label></div>
+                            <div class="radio-item"><input type="radio" id="immediate" name="startTiming" value="immediate"><label for="immediate">Immediate</label></div>
+                            <div class="radio-item"><input type="radio" id="month3" name="startTiming" value="3months"><label for="month3">3 months</label></div>
+                        </div>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="investmentAmount">Lumpsum or SIP Amount (Rs):</label>
+                        <input type="number" id="investmentAmount" name="investmentAmount" placeholder="INR">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label>Investment Avenues:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item"><input type="checkbox" id="debt" name="avenues" value="debt"><label for="debt">Debt</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="stocks" name="avenues" value="stocks"><label for="stocks">Stocks</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="mf" name="avenues" value="mf"><label for="mf">MF</label></div>
+                        </div>
+                    </div>
+                    <div class="form-group half-width">
+                        <label>Investment Style:</label>
+                        <div class="radio-group compact">
+                            <div class="radio-item"><input type="radio" id="sip" name="investmentStyle" value="sip"><label for="sip">SIP</label></div>
+                            <div class="radio-item"><input type="radio" id="lumpsum" name="investmentStyle" value="lumpsum"><label for="lumpsum">Lumpsum</label></div>
+                            <div class="radio-item"><input type="radio" id="sipLumpsum" name="investmentStyle" value="sip+lumpsum"><label for="sipLumpsum">SIP+Lumpsum</label></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="sipProvision">Step up SIP provision (percentage/year):</label>
+                        <input type="text" id="sipProvision" name="sipProvision">
+                    </div>
+                </div>
+            </div>
+            <!-- == Financial Information == -->
+            <div class="section">
+                <div class="section-title">Financial Information</div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label>Educational Qualification & Average Annual Income:</label>
+                        <div class="radio-group vertical">
+                            <div class="radio-item"><input type="radio" id="income1" name="annualIncome" value="<500000"><label for="income1">< Rs 5,00,000</label></div>
+                            <div class="radio-item"><input type="radio" id="income2" name="annualIncome" value="500000-1000000"><label for="income2">Rs 5,00,000 to 10,00,000</label></div>
+                            <div class="radio-item"><input type="radio" id="income3" name="annualIncome" value="1000000-2000000"><label for="income3">Rs 10,00,000 to 20,00,000</label></div>
+                            <div class="radio-item"><input type="radio" id="income4" name="annualIncome" value="2000000-3000000"><label for="income4">Rs 20,00,000 to 30,00,000</label></div>
+                            <div class="radio-item"><input type="radio" id="income5" name="annualIncome" value=">3000000"><label for="income5">> Rs 30,00,000</label></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="investableAmount">Investable Income (Rs) (Monthly Income - Expenses):</label>
+                        <input type="number" id="investableAmount" name="investableAmount" placeholder="INR">
+                    </div>
+                    <div class="form-group half-width">
+                        <label>Occupation:</label>
+                        <div class="radio-group compact">
+                            <div class="radio-item"><input type="radio" id="employed" name="occupation" value="employed"><label for="employed">Employed</label></div>
+                            <div class="radio-item"><input type="radio" id="selfEmployed" name="occupation" value="self-employed"><label for="selfEmployed">Self-employed</label></div>
+                            <div class="radio-item"><input type="radio" id="business" name="occupation" value="business"><label for="business">Business</label></div>
+                            <div class="radio-item"><input type="radio" id="otherOcc" name="occupation" value="others"><label for="otherOcc">Others</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- == Referrals Section == -->
+            <div class="section">
+                <div class="section-title">Referrals - Friends & Family Members</div>
+                <div class="table-section">
+                    <table>
+                        <thead>
+                            <tr><th>Name</th><th>Mobile #</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><input type="text" name="referral1Name"></td><td><input type="tel" name="referral1Mobile"></td></tr>
+                            <tr><td><input type="text" name="referral2Name"></td><td><input type="tel" name="referral2Mobile"></td></tr>
+                            <tr><td><input type="text" name="referral3Name"></td><td><input type="tel" name="referral3Mobile"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- == Signature Section == -->
+            <div class="section">
+                <div class="section-title">Declaration</div>
+                <div class="form-group full-width">
+                    <label for="signature">Signature of the Applicant:</label>
+                    <input type="text" id="signature" name="signature" required>
+                </div>
+            </div>
+            <!-- == Buttons == -->
+            <div class="buttons">
+                <button type="reset" class="btn btn-secondary">Clear Form</button>
+                <button type="button" class="btn btn-secondary" onclick="downloadPDF()">Print Form</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function calculateCI(presentId, futureId, years) {
+            const presentValue = parseFloat(document.getElementById(presentId).value);
+            const futureInput = document.getElementById(futureId);
+            if (isNaN(presentValue) || presentValue <= 0) {
+                alert('Please enter a valid present amount.');
+                return;
+            }
+            const rate = 0.065;
+            const futureValue = presentValue * Math.pow(1 + rate, years);
+            futureInput.value = Math.round(futureValue * 100) / 100;
+            futureInput.style.backgroundColor = '#e6fffa';
+            setTimeout(() => { futureInput.style.backgroundColor = ''; }, 1500);
+        }
+        function calculateRetirementFV() {
+            const years = parseFloat(document.getElementById('yearsLeft').value);
+            const presentValue = parseFloat(document.getElementById('presentAmount').value);
+            const futureInput = document.getElementById('retirementAmount');
+            if (isNaN(presentValue) || presentValue <= 0) {
+                alert('Please enter a valid Current Required Amount.');
+                return;
+            }
+            if (isNaN(years) || years <= 0) {
+                alert('Please enter valid Years Left for Retirement.');
+                return;
+            }
+            const rate = 0.065;
+            const futureValue = presentValue * Math.pow(1 + rate, years);
+            futureInput.value = Math.round(futureValue * 100) / 100;
+            futureInput.style.backgroundColor = '#e6fffa';
+            setTimeout(() => { futureInput.style.backgroundColor = ''; }, 1500);
+        }
+        function printAndRedirect() {
+            window.print();
+        }
+
+	
+
+	function downloadPDF() {
+    		// Only download the form content, not the button panel
+   		 var element = document.querySelector('.form-container');
+    		html2pdf().from(element).save('ApplicationForm.pdf');
+	}
+        document.getElementById('pan').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase(); });
+        ['mobile', 'aadhar'].forEach(id => { document.getElementById(id).addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); }); });
+        document.getElementById('date').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 2) value = value.slice(0, 2) + '/' + value.slice(2);
+            if (value.length > 5) value = value.slice(0, 5) + '/' + value.slice(5, 9);
+            this.value = value;
+        });
+    </script>
+</body>
+</html>
