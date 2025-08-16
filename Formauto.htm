@@ -364,13 +364,7 @@
         function printAndRedirect() {
             window.print();
         }
-
 	
-
-	function downloadPDF() {
-    		// Only download the form content, not the button panel
-   		 var element = document.querySelector('.form-container');
-    		html2pdf().from(element).save('ApplicationForm.pdf');
 	}
         document.getElementById('pan').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase(); });
         ['mobile', 'aadhar'].forEach(id => { document.getElementById(id).addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); }); });
@@ -383,4 +377,3 @@
     </script>
 </body>
 </html>
-
